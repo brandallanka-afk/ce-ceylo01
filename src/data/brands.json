@@ -1,0 +1,74 @@
+[
+  {
+    "id": "ceyvana",
+    "slug": "ceyvana",
+    "name": {
+      "en": "CEYVANA",
+      "si": "සෙයිවානා (CEYVANA)"
+    },
+    "tagline": {
+      "en": "Premium Ceylon Spices",
+      "si": "උසස් තත්ත්වයේ ලංකා කුළුබඩු"
+    },
+    "description": {
+      "en": "Single-origin Ceylon cinnamon, sun-cured chillies, hand-roasted curry blends, and estate-grown peppercorns harvested from Sri Lanka's fertile spice gardens.",
+      "si": "ශ්‍රී ලංකාවේ සරු කුළුබඩු වතු වලින් නෙළාගත් පිරිසිදු ලංකා කුරුඳු, මිරිස්, බැදපු තුනපහ සහ ගම්මිරිස්."
+    },
+    "status": "active",
+    "theme": {
+      "primary": "#30211D",
+      "secondary": "#501C2B",
+      "accent": "#C6A46A",
+      "surface": "#151312"
+    },
+    "heroImage": "/src/assets/images/brand_ceyvana_spices_1795545289791.jpg"
+  },
+  {
+    "id": "ceylomira",
+    "slug": "ceylomira",
+    "name": {
+      "en": "CEYLOMIRA",
+      "si": "සෙයිලෝමිරා (CEYLOMIRA)"
+    },
+    "tagline": {
+      "en": "Premium Ceylon Tea",
+      "si": "උසස් තත්ත්වයේ ලංකා තේ"
+    },
+    "description": {
+      "en": "Hand-plucked high-grown BOPF black teas and warm ginger-infused botanical blends packed at peak freshness in Sri Lanka's central highlands.",
+      "si": "ශ්‍රී ලංකාවේ මධ්‍යම කඳුකරයේ වතු වලින් අතින් නෙළාගත් උසස් BOPF කළු තේ සහ ඉඟුරු මිශ්‍ර තේ."
+    },
+    "status": "active",
+    "theme": {
+      "primary": "#123D32",
+      "secondary": "#1C493C",
+      "accent": "#C6A46A",
+      "surface": "#151312"
+    },
+    "heroImage": "/src/assets/images/brand_ceylomira_tea_1795545290271.jpg"
+  },
+  {
+    "id": "hand-crafts",
+    "slug": "hand-crafts",
+    "name": {
+      "en": "CEYLON HAND CRAFTS",
+      "si": "ලංකා අත්කම් නිර්මාණ"
+    },
+    "tagline": {
+      "en": "Artisanal Heritage — Coming Soon",
+      "si": "දේශීය අත්කම් කලාව — ළඟදීම"
+    },
+    "description": {
+      "en": "A dedicated house for traditional Sri Lankan woodwork, handloom textiles, and brass craftwork is currently in preparation with master artisans.",
+      "si": "සාම්ප්‍රදායික ශ්‍රී ලාංකික ලී කැටයම්, අත්යන්ත්‍ර රෙදිපිළි සහ පිත්තල නිර්මාණ එකතුවක් ළඟදීම."
+    },
+    "status": "coming_soon",
+    "theme": {
+      "primary": "#4E3424",
+      "secondary": "#30211D",
+      "accent": "#C6A46A",
+      "surface": "#151312"
+    },
+    "heroImage": "/src/assets/images/story_ceylon_highlands_1795545292272.jpg"
+  }
+]

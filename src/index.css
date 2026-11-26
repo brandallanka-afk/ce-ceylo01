@@ -1,0 +1,362 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    color-scheme: dark;
+
+    --font-display: "Cormorant Garamond", "Noto Sans Sinhala", Georgia, serif;
+    --font-sans: "Plus Jakarta Sans", "Noto Sans Sinhala", system-ui, -apple-system, sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+    /* Global Dark Luxury Royal Color System */
+    --bg-primary: #151312;
+    --bg-secondary: #211c1a;
+    --surface-graphite: #2a2522;
+    --surface-product: #1c1917;
+    --surface-feature: #25201d;
+    --bg-footer: #0d0c0b;
+    --accent-gold: #c6a46a;
+    --accent-gold-hover: #d4b47b;
+
+    /* Centralized Luxury Typography Text Palette */
+    --text-primary: #f3ebdd;     /* Warm Ivory */
+    --text-ivory: #f3ebdd;       /* Warm Ivory */
+    --text-accent: #c6a46a;      /* Antique Gold */
+    --text-secondary: #d2c6b5;   /* Champagne */
+    --text-champagne: #d2c6b5;   /* Champagne */
+    --text-muted: #a99b88;       /* Muted Taupe */
+    --text-taupe: #a99b88;       /* Muted Taupe */
+
+    --border-gold: rgba(198, 164, 106, 0.26);
+    --border-graphite: #362f2a;
+
+    /* Corporate Identity Aliases */
+    --corp-charcoal: #151312;
+    --corp-onyx: #211c1a;
+    --corp-ivory: #f3ebdd;
+    --corp-champagne: #d2c6b5;
+    --corp-taupe: #a99b88;
+    --corp-gold: #c6a46a;
+    --corp-border: rgba(198, 164, 106, 0.26);
+
+    /* Ceyvana Identity: Deep Burgundy, Dark Chocolate Brown, Antique Gold */
+    --ceyvana-brown: #30211d;
+    --ceyvana-burgundy: #501c2b;
+    --ceyvana-gold: #c6a46a;
+
+    /* Ceylomira Identity: Deep Emerald Green, Forest Green, Antique Gold */
+    --ceylomira-emerald: #123d32;
+    --ceylomira-forest: #1c493c;
+    --ceylomira-gold: #c6a46a;
+
+    /* Hand Crafts Identity: Natural Wood, Royal Charcoal, Antique Gold */
+    --crafts-wood: #4e3424;
+    --crafts-ivory: #f3ebdd;
+    --crafts-gold: #c6a46a;
+  }
+
+  html {
+    font-family: var(--font-sans);
+    scroll-behavior: smooth;
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent-gold);
+    outline-offset: 2px;
+  }
+
+  h1,
+  h2,
+  h3,
+  .font-display {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.015em;
+  }
+
+  /* Preserve clean Sinhala Unicode ligature spacing */
+  :lang(si) h1,
+  :lang(si) h2,
+  :lang(si) h3,
+  :lang(si) .font-display {
+    letter-spacing: 0;
+    line-height: 1.28;
+  }
+
+  .font-mono-tabular {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--text-muted);
+    opacity: 1;
+  }
+
+  select option,
+  select optgroup {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+  }
+
+  .luxury-hairline {
+    border-color: rgba(198, 164, 106, 0.26);
+  }
+
+  .luxury-rule {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      rgba(198, 164, 106, 0.55) 0%,
+      rgba(198, 164, 106, 0.16) 70%,
+      transparent 100%
+    );
+  }
+
+  .luxury-card-shadow {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.28), 0 18px 36px -22px rgba(0, 0, 0, 0.72);
+  }
+
+  @keyframes luxuryLogoReveal {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 8px, 0) scale(0.985);
+    }
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+  }
+
+  @keyframes luxuryGoldAura {
+    0% {
+      opacity: 0;
+      transform: scale(0.92);
+    }
+    45% {
+      opacity: 0.85;
+      transform: scale(1.03);
+    }
+    100% {
+      opacity: 0.42;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes luxuryLogoMaskSweep {
+    0% {
+      transform: translate3d(-135%, 0, 0) skewX(-20deg);
+      opacity: 0;
+    }
+    25% {
+      opacity: 0.72;
+    }
+    75% {
+      opacity: 0.72;
+    }
+    100% {
+      transform: translate3d(235%, 0, 0) skewX(-20deg);
+      opacity: 0;
+    }
+  }
+
+  .luxury-logo-reveal {
+    animation: luxuryLogoReveal 0.72s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .luxury-logo-crest {
+    position: relative;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.45));
+    transition:
+      transform 0.34s cubic-bezier(0.16, 1, 0.3, 1),
+      filter 0.34s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .luxury-logo-crest:hover {
+    transform: translate3d(0, -1px, 0) scale(1.03);
+    filter: drop-shadow(0 5px 15px rgba(198, 164, 106, 0.32)) brightness(1.05);
+  }
+
+  .luxury-logo-sheen::before {
+    content: "";
+    position: absolute;
+    inset: -18% -14%;
+    pointer-events: none;
+    z-index: 0;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(198, 164, 106, 0.16) 0%,
+      rgba(198, 164, 106, 0.05) 44%,
+      transparent 72%
+    );
+    opacity: 0.38;
+    animation: luxuryGoldAura 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.2s 1 both;
+    transition:
+      opacity 0.35s ease,
+      transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .luxury-logo-sheen:hover::before {
+    opacity: 0.85;
+    transform: scale(1.05);
+  }
+
+  @supports ((-webkit-mask-image: url("")) or (mask-image: url(""))) {
+    .luxury-logo-mask-ceyvana,
+    .luxury-logo-mask-ceylomira {
+      -webkit-mask-size: contain;
+      mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      mask-position: center;
+    }
+
+    .luxury-logo-mask-ceyvana {
+      -webkit-mask-image: url("/assets/logos/ceyvana-website.png");
+      mask-image: url("/assets/logos/ceyvana-website.png");
+    }
+
+    .luxury-logo-mask-ceylomira {
+      -webkit-mask-image: url("/assets/logos/ceylomira-website.png");
+      mask-image: url("/assets/logos/ceylomira-website.png");
+    }
+
+    .luxury-logo-sheen-layer {
+      width: 46%;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(198, 164, 106, 0.24) 38%,
+        rgba(243, 235, 221, 0.5) 50%,
+        rgba(198, 164, 106, 0.24) 62%,
+        transparent 100%
+      );
+      opacity: 0;
+      transform: translate3d(-135%, 0, 0) skewX(-20deg);
+      animation: luxuryLogoMaskSweep 1.45s cubic-bezier(0.22, 1, 0.36, 1) 0.28s 1;
+    }
+
+    .luxury-logo-crest:hover .luxury-logo-sheen-layer {
+      animation: none;
+      opacity: 0.72;
+      transform: translate3d(235%, 0, 0) skewX(-20deg);
+      transition:
+        transform 0.95s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.25s ease;
+    }
+  }
+
+  @keyframes ceyvanaStatementReveal {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 7px, 0);
+    }
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @keyframes ceyvanaChampagneSweep {
+    0% {
+      background-position: 100% 0;
+    }
+    48% {
+      background-position: 0% 0;
+    }
+    100% {
+      background-position: 0% 0;
+    }
+  }
+
+  @keyframes ceyvanaRuleBreathe {
+    0%,
+    100% {
+      opacity: 0.65;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+
+  .ceyvana-statement-reveal {
+    animation: ceyvanaStatementReveal 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
+  }
+
+  .ceyvana-statement-gold {
+    color: #c6a46a;
+    font-style: italic;
+    background: linear-gradient(
+      108deg,
+      #c6a46a 0%,
+      #c6a46a 38%,
+      #f6ead2 50%,
+      #c6a46a 62%,
+      #c6a46a 100%
+    );
+    background-size: 300% 100%;
+    background-position: 100% 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: ceyvanaChampagneSweep 8s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+  }
+
+  .ceyvana-statement-gold-2 {
+    animation-delay: 1.35s;
+  }
+
+  .ceyvana-statement-rule {
+    animation: ceyvanaRuleBreathe 6s ease-in-out infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+
+    .luxury-logo-reveal,
+    .luxury-logo-sheen::before,
+    .ceyvana-statement-reveal,
+    .ceyvana-statement-rule {
+      animation: none !important;
+      opacity: 1;
+      transform: none !important;
+    }
+
+    .luxury-logo-sheen::before {
+      opacity: 0.38;
+    }
+
+    .luxury-logo-sheen-layer {
+      display: none !important;
+    }
+
+    .ceyvana-statement-gold {
+      animation: none !important;
+      background: none !important;
+      color: #c6a46a !important;
+      -webkit-text-fill-color: #c6a46a !important;
+    }
+  }
+}

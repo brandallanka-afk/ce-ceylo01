@@ -1,0 +1,593 @@
+[
+  {
+    "id": "cyv-cinnamon-alba",
+    "brandId": "ceyvana",
+    "sku": "CYV-CINN",
+    "slug": "authentic-ceylon-cinnamon-quills",
+    "name": {
+      "en": "Authentic Ceylon Cinnamon Quills",
+      "si": "පිරිසිදු ලංකා කුරුඳු (Alba Grade)"
+    },
+    "categorySlug": "whole-spices",
+    "category": {
+      "en": "Whole & Ground Spices",
+      "si": "සම්පූර්ණ සහ කුඩු කළ කුළුබඩු"
+    },
+    "description": {
+      "en": "Hand-rolled true Ceylon cinnamon (Cinnamomum verum) harvested in southern coastal gardens. Naturally delicate, citrus-sweet, and ultra-low in coumarin compared to cassia.",
+      "si": "දකුණු ලංකාවේ කුරුඳු වතු වලින් නෙළාගත් පිරිසිදු සිහින් ලංකා කුරුඳු. ස්වභාවික මිහිරි සුවඳින් සහ ඉහළ ගුණාත්මකභාවයෙන් යුක්තයි."
+    },
+    "tastingNotes": {
+      "en": "Warm clove honey, subtle citrus zest, delicate sweet bark finish.",
+      "si": "මිහිරි සුවඳ, මෘදු පැඟිරි රසය සහ ස්වභාවික උණුසුම් නිමාව."
+    },
+    "origin": {
+      "en": "Matara & Galle, Southern Province",
+      "si": "මාතර සහ ගාල්ල, දකුණු පළාත"
+    },
+    "mainImage": "/src/assets/images/product_cinnamon_pepper_1795545291338.jpg",
+    "gallery": [
+      "/src/assets/images/product_cinnamon_pepper_1795545291338.jpg",
+      "/src/assets/images/brand_ceyvana_spices_1795545289791.jpg"
+    ],
+    "availability": "in_stock",
+    "featured": true,
+    "seoTitle": "Authentic Ceylon Cinnamon Quills | Ceyvana Premium Spices",
+    "seoDescription": "Buy genuine Grade Alba Ceylon cinnamon quills harvested in southern Sri Lanka. Sweet, aromatic, and export-graded.",
+    "variants": [
+      {
+        "variantSku": "CYV-CINN-50G",
+        "label": "50g",
+        "weightGrams": 50,
+        "priceLkr": 980,
+        "priceUsd": 4.5,
+        "stockQuantity": 85,
+        "available": true
+      },
+      {
+        "variantSku": "CYV-CINN-100G",
+        "label": "100g",
+        "weightGrams": 100,
+        "priceLkr": 1850,
+        "priceUsd": 8.0,
+        "stockQuantity": 64,
+        "available": true
+      },
+      {
+        "variantSku": "CYV-CINN-250G",
+        "label": "250g",
+        "weightGrams": 250,
+        "priceLkr": 4350,
+        "priceUsd": 18.0,
+        "stockQuantity": 28,
+        "available": true
+      }
+    ]
+  },
+  {
+    "id": "cyv-chilli-powder",
+    "brandId": "ceyvana",
+    "sku": "CYV-CHLP",
+    "slug": "ceylon-sun-cured-chilli-powder",
+    "name": {
+      "en": "Sun-Cured Ceylon Chilli Powder",
+      "si": "හිරු රශ්මියෙන් වියළූ මිරිස් කුඩු"
+    },
+    "categorySlug": "chilli-heat",
+    "category": {
+      "en": "Chilli & Heat",
+      "si": "මිරිස් නිෂ්පාදන"
+    },
+    "description": {
+      "en": "Vibrant deep-red chillies sun-dried on clean drying beds and cold-milled in small batches to preserve natural capsaicin warmth and rich crimson color without artificial dyes.",
+      "si": "හිරු එළියෙන් වියළා කෘතිම වර්ණක නොමැතිව සිහින්ව අඹරන ලද පිරිසිදු රතු මිරිස් කුඩු."
+    },
+    "tastingNotes": {
+      "en": "Clean earthy heat, fruity red pepper aroma, deep natural color.",
+      "si": "පිරිසිදු සැර රසය සහ ස්වභාවික තද රතු පැහැය."
+    },
+    "origin": {
+      "en": "Anuradhapura & Jaffna Dry Zone",
+      "si": "අනුරාධපුර සහ යාපනය"
+    },
+    "mainImage": "/src/assets/images/brand_ceyvana_spices_1795545289791.jpg",
+    "gallery": [
+      "/src/assets/images/brand_ceyvana_spices_1795545289791.jpg",
+      "/src/assets/images/product_curry_blends_1795545291347.jpg"
+    ],
+    "availability": "in_stock",
+    "featured": true,
+    "seoTitle": "Sun-Cured Ceylon Chilli Powder | Ceyvana Spices",
+    "seoDescription": "Pure Sri Lankan chilli powder with zero artificial color. Cold-milled for authentic heat and rich aroma.",
+    "variants": [
+      {
+        "variantSku": "CYV-CHLP-100G",
+        "label": "100g",
+        "weightGrams": 100,
+        "priceLkr": 520,
+        "priceUsd": 2.6,
+        "stockQuantity": 140,
+        "available": true
+      },
+      {
+        "variantSku": "CYV-CHLP-250G",
+        "label": "250g",
+        "weightGrams": 250,
+        "priceLkr": 1190,
+        "priceUsd": 5.5,
+        "stockQuantity": 95,
+        "available": true
+      },
+      {
+        "variantSku": "CYV-CHLP-500G",
+        "label": "500g",
+        "weightGrams": 500,
+        "priceLkr": 2250,
+        "priceUsd": 9.8,
+        "stockQuantity": 50,
+        "available": true
+      }
+    ]
+  },
+  {
+    "id": "cyv-chilli-pieces",
+    "brandId": "ceyvana",
+    "sku": "CYV-CHLF",
+    "slug": "crushed-ceylon-chilli-pieces",
+    "name": {
+      "en": "Crushed Ceylon Chilli Pieces",
+      "si": "කෑලි මිරිස්"
+    },
+    "categorySlug": "chilli-heat",
+    "category": {
+      "en": "Chilli & Heat",
+      "si": "මිරිස් නිෂ්පාදන"
+    },
+    "description": {
+      "en": "Coarsely crushed whole sun-dried Sri Lankan red chillies retaining their aromatic seeds and skins. Ideal for tempering, sambols, and crisp stir-fries.",
+      "si": "අව්වේ වියළූ රතු මිරිස් කරල් පොතු සහ ඇට සමඟ කෑලි වශයෙන් සකසා ඇත. තෙම්පරාදු සහ සම්බෝල සඳහා අගනේය."
+    },
+    "tastingNotes": {
+      "en": "Crisp roasted seed warmth, bright peppercorn-like bite.",
+      "si": "සැර සහ සුවඳවත් රසය."
+    },
+    "origin": {
+      "en": "Vavuniya & Dry Zone Farms",
+      "si": "වවුනියාව සහ වියළි කලාපීය ගොවිපළවල්"
+    },
+    "mainImage": "/src/assets/images/brand_ceyvana_spices_1795545289791.jpg",
+    "gallery": [
+      "/src/assets/images/brand_ceyvana_spices_1795545289791.jpg"
+    ],
+    "availability": "in_stock",
+    "featured": false,
+    "seoTitle": "Crushed Ceylon Chilli Pieces | Ceyvana Spices",
+    "seoDescription": "Coarse Sri Lankan crushed chilli flakes for tempering, sambols, and authentic island cooking.",
+    "variants": [
+      {
+        "variantSku": "CYV-CHLF-100G",
+        "label": "100g",
+        "weightGrams": 100,
+        "priceLkr": 540,
+        "priceUsd": 2.7,
+        "stockQuantity": 110,
+        "available": true
+      },
+      {
+        "variantSku": "CYV-CHLF-250G",
+        "label": "250g",
+        "weightGrams": 250,
+        "priceLkr": 1240,
+        "priceUsd": 5.8,
+        "stockQuantity": 70,
+        "available": true
+      }
+    ]
+  },
+  {
+    "id": "cyv-traditional-curry",
+    "brandId": "ceyvana",
+    "sku": "CYV-CURT",
+    "slug": "traditional-unroasted-curry-powder",
+    "name": {
+      "en": "Traditional Ceylon Curry Powder",
+      "si": "සාම්ප්‍රදායික අමු තුනපහ කුඩු"
+    },
+    "categorySlug": "curry-blends",
+    "category": {
+      "en": "Curry Blends",
+      "si": "තුනපහ මිශ්‍රණ"
+    },
+    "description": {
+      "en": "An aromatic heritage unroasted blend of coriander, cumin, fennel, fenugreek, curry leaves, and Ceylon cinnamon crafted for everyday vegetable, lentil, and coconut-milk curries.",
+      "si": "කොත්තමල්ලි, සූදුරු, මහදුරු, උළුහාල්, කරපිංචා සහ ලංකා කුරුඳු එක්කර සාදන ලද සාම්ප්‍රදායික අමු තුනපහ මිශ්‍රණය."
+    },
+    "tastingNotes": {
+      "en": "Fragrant citrus coriander, mellow fennel sweetness, herbal curry leaf lift.",
+      "si": "නැවුම් කොත්තමල්ලි සහ කරපිංචා සුවඳින් පිරි මෘදු රසය."
+    },
+    "origin": {
+      "en": "Matale Spice Craft House",
+      "si": "මාතලේ කුළුබඩු මධ්‍යස්ථානය"
+    },
+    "mainImage": "/src/assets/images/product_curry_blends_1795545291347.jpg",
+    "gallery": [
+      "/src/assets/images/product_curry_blends_1795545291347.jpg",
+      "/src/assets/images/brand_ceyvana_spices_1795545289791.jpg"
+    ],
+    "availability": "in_stock",
+    "featured": true,
+    "seoTitle": "Traditional Unroasted Ceylon Curry Powder | Ceyvana",
+    "seoDescription": "Authentic Sri Lankan unroasted curry blend with coriander, cumin, fennel, and curry leaves.",
+    "variants": [
+      {
+        "variantSku": "CYV-CURT-100G",
+        "label": "100g",
+        "weightGrams": 100,
+        "priceLkr": 590,
+        "priceUsd": 2.9,
+        "stockQuantity": 120,
+        "available": true
+      },
+      {
+        "variantSku": "CYV-CURT-250G",
+        "label": "250g",
+        "weightGrams": 250,
+        "priceLkr": 1350,
+        "priceUsd": 6.2,
+        "stockQuantity": 80,
+        "available": true
+      },
+      {
+        "variantSku": "CYV-CURT-500G",
+        "label": "500g",
+        "weightGrams": 500,
+        "priceLkr": 2550,
+        "priceUsd": 11.5,
+        "stockQuantity": 45,
+        "available": true
+      }
+    ]
+  },
+  {
+    "id": "cyv-roasted-curry",
+    "brandId": "ceyvana",
+    "sku": "CYV-CURR",
+    "slug": "dark-roasted-ceylon-curry-powder",
+    "name": {
+      "en": "Dark Roasted Ceylon Curry Powder",
+      "si": "බැදපු තුනපහ කුඩු"
+    },
+    "categorySlug": "curry-blends",
+    "category": {
+      "en": "Curry Blends",
+      "si": "තුනපහ මිශ්‍රණ"
+    },
+    "description": {
+      "en": "Slow-toasted whole spices roasted to deep mahogany before stone-milling with Ceylon black pepper, cloves, and cardamom for rich meat, poultry, and Jaffna-style curries.",
+      "si": "මඳ ගින්නේ රන්වන් පැහැ වන තුරු බැද ගන්නා ලද කුළුබඩු සමඟ ගම්මිරිස්, කරාබුනැටි සහ එනසාල් මිශ්‍ර කළ උසස් බැදපු තුනපහ."
+    },
+    "tastingNotes": {
+      "en": "Smoky toasted spice, warm cardamom depth, lingering black pepper.",
+      "si": "ගැඹුරු බැදපු සුවඳ, එනසාල් සහ ගම්මිරිස් උණුසුම් රසය."
+    },
+    "origin": {
+      "en": "Kandy & Matale Highlands",
+      "si": "මහනුවර සහ මාතලේ"
+    },
+    "mainImage": "/src/assets/images/product_curry_blends_1795545291347.jpg",
+    "gallery": [
+      "/src/assets/images/product_curry_blends_1795545291347.jpg"
+    ],
+    "availability": "in_stock",
+    "featured": false,
+    "seoTitle": "Dark Roasted Ceylon Curry Powder | Ceyvana Spices",
+    "seoDescription": "Slow-roasted Sri Lankan dark curry powder for rich meat and heritage curries.",
+    "variants": [
+      {
+        "variantSku": "CYV-CURR-100G",
+        "label": "100g",
+        "weightGrams": 100,
+        "priceLkr": 650,
+        "priceUsd": 3.2,
+        "stockQuantity": 95,
+        "available": true
+      },
+      {
+        "variantSku": "CYV-CURR-250G",
+        "label": "250g",
+        "weightGrams": 250,
+        "priceLkr": 1490,
+        "priceUsd": 6.8,
+        "stockQuantity": 60,
+        "available": true
+      }
+    ]
+  },
+  {
+    "id": "cyv-turmeric",
+    "brandId": "ceyvana",
+    "sku": "CYV-TURM",
+    "slug": "heirloom-ceylon-turmeric-powder",
+    "name": {
+      "en": "Heirloom Ceylon Turmeric Powder",
+      "si": "පිරිසිදු දේශීය කහ කුඩු"
+    },
+    "categorySlug": "whole-spices",
+    "category": {
+      "en": "Whole & Ground Spices",
+      "si": "සම්පූර්ණ සහ කුඩු කළ කුළුබඩු"
+    },
+    "description": {
+      "en": "High-curcumin heirloom turmeric rhizomes steamed, sun-cured, and finely milled for vivid golden hue and unmistakable earthy fragrance.",
+      "si": "දේශීය කහ අල තම්බා වියළා සිහින්ව අඹරන ලද ස්වභාවික රන්වන් කහ කුඩු."
+    },
+    "tastingNotes": {
+      "en": "Vibrant ginger-root warmth, woody earthiness, clean bitter-sweet balance.",
+      "si": "පිරිසිදු දේශීය කහ සුවඳ සහ ප්‍රබල ස්වභාවික ගුණය."
+    },
+    "origin": {
+      "en": "Kurunegala & Matale Smallholders",
+      "si": "කුරුණෑගල සහ මාතලේ ගොවිපළවල්"
+    },
+    "mainImage": "/src/assets/images/brand_ceyvana_spices_1795545289791.jpg",
+    "gallery": [
+      "/src/assets/images/brand_ceyvana_spices_1795545289791.jpg"
+    ],
+    "availability": "in_stock",
+    "featured": false,
+    "seoTitle": "Heirloom Ceylon Turmeric Powder | Ceyvana Spices",
+    "seoDescription": "Pure Sri Lankan heirloom turmeric with rich natural curcumin and warm aroma.",
+    "variants": [
+      {
+        "variantSku": "CYV-TURM-100G",
+        "label": "100g",
+        "weightGrams": 100,
+        "priceLkr": 680,
+        "priceUsd": 3.4,
+        "stockQuantity": 90,
+        "available": true
+      },
+      {
+        "variantSku": "CYV-TURM-250G",
+        "label": "250g",
+        "weightGrams": 250,
+        "priceLkr": 1580,
+        "priceUsd": 7.2,
+        "stockQuantity": 55,
+        "available": true
+      }
+    ]
+  },
+  {
+    "id": "cyv-black-pepper",
+    "brandId": "ceyvana",
+    "sku": "CYV-PEPP",
+    "slug": "highland-ceylon-black-peppercorns",
+    "name": {
+      "en": "Highland Ceylon Black Peppercorns",
+      "si": "මධ්‍යම කඳුකර කළු ගම්මිරිස් ඇට"
+    },
+    "categorySlug": "whole-spices",
+    "category": {
+      "en": "Whole & Ground Spices",
+      "si": "සම්පූර්ණ සහ කුඩු කළ කුළුබඩු"
+    },
+    "description": {
+      "en": "High-piperine whole black peppercorns sun-dried on spice estates in Matale. Renowned globally for pungent essential oils and crisp woody spice.",
+      "si": "මාතලේ වතු වලින් නෙළා අව්වේ වියළූ ඉහළ පයිපරීන් ගුණයෙන් යුත් කළු ගම්මිරිස් ඇට."
+    },
+    "tastingNotes": {
+      "en": "Sharp piney heat, high piperine intensity, crisp citrus-wood finish.",
+      "si": "තියුණු සැර ගතිය සහ ප්‍රබල ස්වභාවික ගම්මිරිස් සුවඳ."
+    },
+    "origin": {
+      "en": "Matale District, Central Province",
+      "si": "මාතලේ, මධ්‍යම පළාත"
+    },
+    "mainImage": "/src/assets/images/product_cinnamon_pepper_1795545291338.jpg",
+    "gallery": [
+      "/src/assets/images/product_cinnamon_pepper_1795545291338.jpg"
+    ],
+    "availability": "in_stock",
+    "featured": false,
+    "seoTitle": "Highland Ceylon Black Peppercorns | Ceyvana Spices",
+    "seoDescription": "High-piperine Sri Lankan whole black peppercorns from Matale spice gardens.",
+    "variants": [
+      {
+        "variantSku": "CYV-PEPP-100G",
+        "label": "100g",
+        "weightGrams": 100,
+        "priceLkr": 820,
+        "priceUsd": 3.9,
+        "stockQuantity": 105,
+        "available": true
+      },
+      {
+        "variantSku": "CYV-PEPP-250G",
+        "label": "250g",
+        "weightGrams": 250,
+        "priceLkr": 1920,
+        "priceUsd": 8.6,
+        "stockQuantity": 62,
+        "available": true
+      }
+    ]
+  },
+  {
+    "id": "cml-bopf-black-tea",
+    "brandId": "ceylomira",
+    "sku": "CML-BOPF",
+    "slug": "high-grown-ceylon-bopf-black-tea",
+    "name": {
+      "en": "High-Grown Ceylon BOPF Black Tea",
+      "si": "උසස් කඳුකර BOPF කළු තේ"
+    },
+    "categorySlug": "black-tea",
+    "category": {
+      "en": "Black Tea",
+      "si": "කළු තේ"
+    },
+    "description": {
+      "en": "Single-region Broken Orange Pekoe Fannings (BOPF) plucked above 1,500 meters. Yields a brisk, bright amber-copper liquor with classic Ceylon briskness, excellent black or with milk.",
+      "si": "මීටර් 1,500 ඉහළ කඳුකර වතු වලින් නෙළාගත් සියුම් BOPF කළු තේ. දීප්තිමත් රන්වන් පැහැයෙන් සහ නැවුම් ප්‍රබෝධමත් රසයෙන් යුක්තයි."
+    },
+    "tastingNotes": {
+      "en": "Bright copper liquor, floral malt body, crisp clean highland finish.",
+      "si": "පිරිසිදු මල් සුවඳ, තද රන්වන් කහට රසය සහ ප්‍රබෝධමත් නිමාව."
+    },
+    "origin": {
+      "en": "Nuwara Eliya & Dimbula Estates",
+      "si": "නුවරඑළිය සහ දිඹුල වතු යාය"
+    },
+    "mainImage": "/src/assets/images/brand_ceylomira_tea_1795545290271.jpg",
+    "gallery": [
+      "/src/assets/images/brand_ceylomira_tea_1795545290271.jpg",
+      "/src/assets/images/story_ceylon_highlands_1795545292272.jpg"
+    ],
+    "availability": "in_stock",
+    "featured": true,
+    "seoTitle": "High-Grown Ceylon BOPF Black Tea | Ceylomira Tea",
+    "seoDescription": "Authentic Sri Lankan BOPF black tea from Nuwara Eliya estates. Brisk, full-bodied, and packed fresh.",
+    "variants": [
+      {
+        "variantSku": "CML-BOPF-100G",
+        "label": "100g",
+        "weightGrams": 100,
+        "priceLkr": 890,
+        "priceUsd": 4.2,
+        "stockQuantity": 130,
+        "available": true
+      },
+      {
+        "variantSku": "CML-BOPF-250G",
+        "label": "250g",
+        "weightGrams": 250,
+        "priceLkr": 2050,
+        "priceUsd": 9.2,
+        "stockQuantity": 84,
+        "available": true
+      },
+      {
+        "variantSku": "CML-BOPF-500G",
+        "label": "500g",
+        "weightGrams": 500,
+        "priceLkr": 3950,
+        "priceUsd": 17.5,
+        "stockQuantity": 40,
+        "available": true
+      }
+    ]
+  },
+  {
+    "id": "cml-ginger-tea",
+    "brandId": "ceylomira",
+    "sku": "CML-GING",
+    "slug": "ceylon-ginger-infused-black-tea",
+    "name": {
+      "en": "Ceylon Ginger-Infused Black Tea",
+      "si": "ලංකා ඉඟුරු මිශ්‍ර කළු තේ"
+    },
+    "categorySlug": "infused-tea",
+    "category": {
+      "en": "Infused Tea",
+      "si": "රස ගැන්වූ තේ"
+    },
+    "description": {
+      "en": "Brisk Uva and Dimbula black tea leaves blended with sun-dried heirloom Sri Lankan ginger root slices—zero artificial flavorings—for a naturally warming, restorative brew.",
+      "si": "ඌව සහ දිඹුල කළු තේ සමඟ ස්වභාවිකව වියළූ දේශීය ඉඟුරු පෙති මිශ්‍ර කර සාදන ලද උණුසුම් සහ ප්‍රබෝධමත් තේ."
+    },
+    "tastingNotes": {
+      "en": "Zesty wild ginger warmth balanced by smooth malty black tea.",
+      "si": "ස්වභාවික ඉඟුරු සැර ගතිය සහ මෘදු කළු තේ රසයේ සමතුලිත බව."
+    },
+    "origin": {
+      "en": "Uva Highlands & Kandy Gardens",
+      "si": "ඌව කඳුකරය සහ මහනුවර"
+    },
+    "mainImage": "/src/assets/images/brand_ceylomira_tea_1795545290271.jpg",
+    "gallery": [
+      "/src/assets/images/brand_ceylomira_tea_1795545290271.jpg"
+    ],
+    "availability": "in_stock",
+    "featured": true,
+    "seoTitle": "Ceylon Ginger-Infused Black Tea | Ceylomira",
+    "seoDescription": "Natural Sri Lankan black tea blended with real dried heirloom ginger slices.",
+    "variants": [
+      {
+        "variantSku": "CML-GING-100G",
+        "label": "100g",
+        "weightGrams": 100,
+        "priceLkr": 990,
+        "priceUsd": 4.8,
+        "stockQuantity": 92,
+        "available": true
+      },
+      {
+        "variantSku": "CML-GING-200G",
+        "label": "200g",
+        "weightGrams": 200,
+        "priceLkr": 1890,
+        "priceUsd": 8.9,
+        "stockQuantity": 54,
+        "available": true
+      }
+    ]
+  },
+  {
+    "id": "cml-estate-pekoe",
+    "brandId": "ceylomira",
+    "sku": "CML-PEKO",
+    "slug": "single-estate-uva-pekoe-loose-leaf",
+    "name": {
+      "en": "Single-Estate Uva Pekoe Reserve",
+      "si": "ඌව වතු යායේ පිකෝ තේ (Pekoe Reserve)"
+    },
+    "categorySlug": "estate-collections",
+    "category": {
+      "en": "Estate Collections",
+      "si": "විශේෂ වතු එකතුව"
+    },
+    "description": {
+      "en": "Whole curled Pekoe leaves plucked during the dry eastern monsoon season in Uva. Offers delicate wintergreen aromatics and a golden-amber infusion tailored for connoisseurs.",
+      "si": "ඌව ප්‍රදේශයේ විශේෂ කාලගුණික සමයේදී නෙළාගත් සම්පූර්ණ පිකෝ තේ දළු. සුවිශේෂී සුවඳින් සහ රන්වන් පැහැයෙන් යුක්තයි."
+    },
+    "tastingNotes": {
+      "en": "Aromatic eucalyptus breeze, honeyed stone fruit, velvety briskness.",
+      "si": "මිහිරි පැණි රසැති සුවඳ සහ මෘදු රන්වන් නිමාව."
+    },
+    "origin": {
+      "en": "Haputale, Uva Province",
+      "si": "හපුතලේ, ඌව පළාත"
+    },
+    "mainImage": "/src/assets/images/story_ceylon_highlands_1795545292272.jpg",
+    "gallery": [
+      "/src/assets/images/story_ceylon_highlands_1795545292272.jpg",
+      "/src/assets/images/brand_ceylomira_tea_1795545290271.jpg"
+    ],
+    "availability": "low_stock",
+    "featured": true,
+    "seoTitle": "Single-Estate Uva Pekoe Reserve | Ceylomira Tea",
+    "seoDescription": "Seasonal Uva highland whole-leaf Pekoe Ceylon tea, packed at origin.",
+    "variants": [
+      {
+        "variantSku": "CML-PEKO-100G",
+        "label": "100g",
+        "weightGrams": 100,
+        "priceLkr": 1350,
+        "priceUsd": 6.4,
+        "stockQuantity": 18,
+        "available": true
+      },
+      {
+        "variantSku": "CML-PEKO-250G",
+        "label": "250g",
+        "weightGrams": 250,
+        "priceLkr": 3100,
+        "priceUsd": 14.0,
+        "stockQuantity": 9,
+        "available": true
+      }
+    ]
+  }
+]

@@ -1,0 +1,342 @@
+{
+  "entities": {
+    "Brand": {
+      "title": "Brand",
+      "description": "Independent brand configuration (Ceyvana, Ceylomira, Hand Crafts).",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 2, "maxLength": 64, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "slug": { "type": "string", "minLength": 2, "maxLength": 64, "pattern": "^[a-z0-9\\-]+$" },
+        "name": { "type": "object", "description": "Localized brand name map (en, si, optional 3rd language)" },
+        "tagline": { "type": "object", "description": "Localized brand tagline map" },
+        "description": { "type": "object", "description": "Localized brand description map" },
+        "status": { "type": "string", "enum": ["active", "coming_soon", "hidden"] },
+        "theme": { "type": "object", "description": "Brand hex palette tokens" },
+        "heroImage": { "type": "string", "maxLength": 500 },
+        "sortOrder": { "type": "number" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "slug", "name", "status", "sortOrder", "updatedAt"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "Product category scoped to a brandId.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 2, "maxLength": 64, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "brandId": { "type": "string", "minLength": 2, "maxLength": 64, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "slug": { "type": "string", "minLength": 2, "maxLength": 64, "pattern": "^[a-z0-9\\-]+$" },
+        "name": { "type": "object", "description": "Localized category name map" },
+        "sortOrder": { "type": "number" },
+        "isActive": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "brandId", "slug", "name", "isActive", "updatedAt"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Multi-variant storefront product belonging to a brandId.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 2, "maxLength": 100, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "brandId": { "type": "string", "enum": ["ceyvana", "ceylomira", "hand-crafts"] },
+        "sku": { "type": "string", "minLength": 2, "maxLength": 40 },
+        "slug": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "categorySlug": { "type": "string", "minLength": 2, "maxLength": 64 },
+        "name": { "type": "object", "description": "Localized product name map" },
+        "category": { "type": "object", "description": "Localized category map" },
+        "description": { "type": "object", "description": "Localized product description map" },
+        "tastingNotes": { "type": "object", "description": "Localized aroma and profile map" },
+        "origin": { "type": "object", "description": "Localized harvest origin map" },
+        "highlights": { "type": "object", "description": "Localized curated product highlights" },
+        "ingredients": { "type": "object", "description": "Localized verified ingredients list" },
+        "storageInstructions": { "type": "object", "description": "Localized storage instructions" },
+        "packagingType": { "type": "object", "description": "Localized retail/trade packaging description" },
+        "technicalSpecs": { "type": "object", "description": "Localized technical and grade specifications" },
+        "certifications": { "type": "array", "description": "Verified certification labels (never fabricated)" },
+        "mainImage": { "type": "string", "maxLength": 800 },
+        "thumbnailImage": { "type": "string", "maxLength": 800 },
+        "gallery": { "type": "array", "description": "Bounded up to 6 gallery image URLs" },
+        "availability": { "type": "string", "enum": ["in_stock", "low_stock", "out_of_stock"] },
+        "featured": { "type": "boolean" },
+        "isArchived": { "type": "boolean" },
+        "seoTitle": { "type": "string", "maxLength": 160 },
+        "seoDescription": { "type": "string", "maxLength": 320 },
+        "variants": { "type": "array", "description": "Bounded up to 12 pack-size variants" },
+        "exportable": { "type": "boolean" },
+        "moqUnits": { "type": "number" },
+        "exportPriceUsd": { "type": "number" },
+        "bulkPackSizes": { "type": "array", "description": "Available export & bulk packaging formats" },
+        "exportSpecs": { "type": "object", "description": "Non-promissory botanical and specification notes" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "brandId", "sku", "slug", "name", "variants", "availability", "isArchived", "updatedAt"]
+    },
+    "InventoryItem": {
+      "title": "InventoryItem",
+      "description": "Per-variant SKU inventory record.",
+      "type": "object",
+      "properties": {
+        "variantSku": { "type": "string", "minLength": 2, "maxLength": 64, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "productId": { "type": "string", "minLength": 2, "maxLength": 100 },
+        "brandId": { "type": "string", "enum": ["ceyvana", "ceylomira", "hand-crafts"] },
+        "label": { "type": "string", "maxLength": 40 },
+        "stockQuantity": { "type": "number" },
+        "lowStockThreshold": { "type": "number" },
+        "available": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["variantSku", "productId", "brandId", "stockQuantity", "available", "updatedAt"]
+    },
+    "Customer": {
+      "title": "Customer",
+      "description": "Customer profile containing PII; strictly admin-only read/write.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 2, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "name": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "email": { "type": "string", "maxLength": 180 },
+        "phone": { "type": "string", "maxLength": 40 },
+        "country": { "type": "string", "maxLength": 80 },
+        "city": { "type": "string", "maxLength": 80 },
+        "orderCount": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "name", "email", "country", "createdAt"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer order record; protected from client price/status tampering.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 2, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "orderRef": { "type": "string", "minLength": 4, "maxLength": 40 },
+        "customerId": { "type": "string", "maxLength": 128 },
+        "customerName": { "type": "string", "maxLength": 120 },
+        "customerEmail": { "type": "string", "maxLength": 180 },
+        "phone": { "type": "string", "maxLength": 40 },
+        "country": { "type": "string", "maxLength": 80 },
+        "address": { "type": "string", "maxLength": 300 },
+        "city": { "type": "string", "maxLength": 80 },
+        "postalCode": { "type": "string", "maxLength": 30 },
+        "orderNotes": { "type": "string", "maxLength": 500 },
+        "deliveryMethod": { "type": "string", "enum": ["local_standard", "local_express", "international_courier", "international_quote"] },
+        "paymentMethod": { "type": "string", "enum": ["whatsapp_order", "bank_transfer", "cod", "sl_gateway", "intl_gateway"] },
+        "paymentReference": { "type": "string", "maxLength": 120 },
+        "shippingStatus": { "type": "string", "enum": ["not_dispatched", "label_created", "in_transit", "out_for_delivery", "delivered", "returned"] },
+        "trackingNumber": { "type": "string", "maxLength": 100 },
+        "carrier": { "type": "string", "maxLength": 80 },
+        "currency": { "type": "string", "maxLength": 6 },
+        "subtotal": { "type": "number" },
+        "shippingFee": { "type": "number" },
+        "totalAmount": { "type": "number" },
+        "itemCount": { "type": "number" },
+        "items": { "type": "array" },
+        "paymentHistory": { "type": "array" },
+        "orderStatus": { "type": "string", "enum": ["new", "contacted", "pending", "awaiting_payment", "payment_verification", "confirmed", "processing", "dispatched", "shipped", "completed", "delivered", "cancelled", "placed", "packed"] },
+        "paymentStatus": { "type": "string", "enum": ["pending", "pending_verification", "paid", "failed", "refunded", "partially_refunded"] },
+        "monthKey": { "type": "string", "maxLength": 7 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "orderRef", "customerName", "currency", "totalAmount", "orderStatus", "paymentStatus", "createdAt", "updatedAt"]
+    },
+    "Enquiry": {
+      "title": "Enquiry",
+      "description": "Publicly submittable retail, wholesale, and international export buyer enquiries; admin-only read/manage.",
+      "type": "object",
+      "properties": {
+        "enquiryRef": { "type": "string", "maxLength": 40 },
+        "type": { "type": "string", "enum": ["wholesale", "export", "general"] },
+        "brandInterest": { "type": "string", "maxLength": 80 },
+        "contactName": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "companyName": { "type": "string", "maxLength": 140 },
+        "email": { "type": "string", "minLength": 3, "maxLength": 180 },
+        "phone": { "type": "string", "maxLength": 40 },
+        "country": { "type": "string", "maxLength": 80 },
+        "website": { "type": "string", "maxLength": 240 },
+        "businessType": { "type": "string", "enum": ["Importer", "Distributor", "Wholesaler", "Retailer", "Private Label Buyer", "Other"] },
+        "productInterests": { "type": "array" },
+        "requiredQuantities": { "type": "string", "maxLength": 160 },
+        "packagingRequirements": { "type": "string", "maxLength": 200 },
+        "destinationCountry": { "type": "string", "maxLength": 80 },
+        "volumeBand": { "type": "string", "maxLength": 60 },
+        "message": { "type": "string", "minLength": 3, "maxLength": 2500 },
+        "status": { "type": "string", "enum": ["new", "reviewed", "quoted", "responded", "archived"] },
+        "adminResponse": { "type": "string", "maxLength": 2500 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["type", "contactName", "email", "message", "status", "createdAt"]
+    },
+    "Promotion": {
+      "title": "Promotion",
+      "description": "Discount and promotional pricing rule.",
+      "type": "object",
+      "properties": {
+        "code": { "type": "string", "minLength": 3, "maxLength": 32, "pattern": "^[A-Z0-9_\\-]+$" },
+        "type": { "type": "string", "enum": ["percentage", "fixed"] },
+        "value": { "type": "number" },
+        "minOrderLkr": { "type": "number" },
+        "brandIds": { "type": "array" },
+        "isActive": { "type": "boolean" },
+        "expiresAt": { "type": "string", "maxLength": 40 },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["code", "type", "value", "isActive", "updatedAt"]
+    },
+    "SiteSetting": {
+      "title": "SiteSetting",
+      "description": "Global corporate content, language config, and storefront settings.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 64 },
+        "announcement": { "type": "object" },
+        "heroTitle": { "type": "object" },
+        "heroSubtitle": { "type": "object" },
+        "whatsappNumber": { "type": "string", "maxLength": 30 },
+        "brandWhatsappNumbers": { "type": "object", "description": "Per-brand configurable WhatsApp numbers" },
+        "portfolioSettings": { "type": "object", "description": "Public PDF portfolio access & registration rules" },
+        "enabledLanguages": { "type": "array" },
+        "freeDeliveryThresholdLkr": { "type": "number" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "updatedAt"]
+    },
+    "AdminUser": {
+      "title": "AdminUser",
+      "description": "Authorized administrator role mapping.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "minLength": 5, "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 180 },
+        "displayName": { "type": "string", "maxLength": 120 },
+        "role": { "type": "string", "enum": ["super_admin", "catalog_manager", "order_manager"] },
+        "active": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role", "active", "createdAt", "updatedAt"]
+    },
+    "AuditLog": {
+      "title": "AuditLog",
+      "description": "Append-only administrative security audit trail.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 2, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "actorUid": { "type": "string", "minLength": 5, "maxLength": 128 },
+        "actorEmail": { "type": "string", "maxLength": 180 },
+        "actorRole": { "type": "string", "enum": ["super_admin", "catalog_manager", "order_manager"] },
+        "action": { "type": "string", "minLength": 2, "maxLength": 80 },
+        "targetType": { "type": "string", "enum": ["order", "payment", "enquiry", "settings", "stock", "export", "admin_users", "catalog", "portfolio", "catalogue_request"] },
+        "targetId": { "type": "string", "maxLength": 120 },
+        "summary": { "type": "string", "maxLength": 280 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "actorUid", "actorEmail", "actorRole", "action", "targetType", "targetId", "summary", "createdAt"]
+    },
+    "CataloguePortfolio": {
+      "title": "CataloguePortfolio",
+      "description": "Versioned single-brand PDF portfolio metadata (published versions publicly readable; drafts admin-only).",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 2, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "brandId": { "type": "string", "enum": ["ceyvana", "ceylomira", "hand-crafts"] },
+        "language": { "type": "string", "enum": ["en", "si"] },
+        "currency": { "type": "string", "maxLength": 6 },
+        "title": { "type": "string", "maxLength": 140 },
+        "version": { "type": "string", "maxLength": 24 },
+        "status": { "type": "string", "enum": ["draft", "published", "unpublished"] },
+        "scope": { "type": "string", "enum": ["all", "categories", "products"] },
+        "coverDesign": { "type": "string", "enum": ["heritage_crest", "editorial_split", "gallery_minimal"] },
+        "orientation": { "type": "string", "enum": ["portrait", "landscape"] },
+        "productCount": { "type": "number" },
+        "pageCount": { "type": "number" },
+        "generatedAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "brandId", "language", "title", "version", "status", "generatedAt", "updatedAt"]
+    },
+    "CatalogueRequest": {
+      "title": "CatalogueRequest",
+      "description": "Customer requests for product portfolios and brand catalogues; public create-only, admin-only read/manage.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 2, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "requestRef": { "type": "string", "maxLength": 40 },
+        "brandId": { "type": "string", "enum": ["ceyvana", "ceylomira", "hand-crafts"] },
+        "language": { "type": "string", "enum": ["en", "si"] },
+        "customerName": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "email": { "type": "string", "minLength": 3, "maxLength": 180 },
+        "country": { "type": "string", "maxLength": 80 },
+        "companyName": { "type": "string", "maxLength": 140 },
+        "whatsappNumber": { "type": "string", "maxLength": 40 },
+        "scope": { "type": "string", "enum": ["all", "categories", "products"] },
+        "requestedCategories": { "type": "array" },
+        "requestedProducts": { "type": "array" },
+        "notes": { "type": "string", "maxLength": 1000 },
+        "status": { "type": "string", "enum": ["new", "reviewed", "sent", "archived"] },
+        "assignedPortfolioId": { "type": "string", "maxLength": 128 },
+        "assignedPortfolioVersion": { "type": "string", "maxLength": 24 },
+        "adminNotes": { "type": "string", "maxLength": 1000 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["brandId", "language", "customerName", "email", "country", "status", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/brands/{brandId}": {
+      "schema": { "$ref": "#/entities/Brand" },
+      "description": "Publicly readable brand configurations; admin write only."
+    },
+    "/categories/{categoryId}": {
+      "schema": { "$ref": "#/entities/Category" },
+      "description": "Publicly readable categories keyed by brandId; admin write only."
+    },
+    "/products/{productId}": {
+      "schema": { "$ref": "#/entities/Product" },
+      "description": "Storefront products and variants; public read for non-archived items, admin write only."
+    },
+    "/inventory/{variantSku}": {
+      "schema": { "$ref": "#/entities/InventoryItem" },
+      "description": "Stock ledger per variant SKU; admin read/write only."
+    },
+    "/customers/{customerId}": {
+      "schema": { "$ref": "#/entities/Customer" },
+      "description": "Customer PII directory; strictly admin read/write only."
+    },
+    "/orders/{orderId}": {
+      "schema": { "$ref": "#/entities/Order" },
+      "description": "Customer orders; strictly admin read/write in Phase 2."
+    },
+    "/enquiries/{enquiryId}": {
+      "schema": { "$ref": "#/entities/Enquiry" },
+      "description": "Public create for wholesale/contact enquiries; strictly admin read/update/delete."
+    },
+    "/promotions/{promoId}": {
+      "schema": { "$ref": "#/entities/Promotion" },
+      "description": "Discount rules; admin read/write only."
+    },
+    "/siteSettings/{settingId}": {
+      "schema": { "$ref": "#/entities/SiteSetting" },
+      "description": "Publicly readable website content and language settings; admin write only."
+    },
+    "/adminUsers/{uid}": {
+      "schema": { "$ref": "#/entities/AdminUser" },
+      "description": "Role-based administrator registry; strictly super_admin write."
+    },
+    "/auditLogs/{logId}": {
+      "schema": { "$ref": "#/entities/AuditLog" },
+      "description": "Immutable append-only administrative security audit ledger; super_admin read only, updates/deletes denied."
+    },
+    "/cataloguePortfolios/{portfolioId}": {
+      "schema": { "$ref": "#/entities/CataloguePortfolio" },
+      "description": "Single-brand product portfolio editions; published editions publicly readable, drafts and writes strictly admin-only."
+    },
+    "/catalogueRequests/{requestId}": {
+      "schema": { "$ref": "#/entities/CatalogueRequest" },
+      "description": "Customer catalogue requests; public create-only (status=new), strictly admin-only read/update/delete."
+    }
+  }
+}

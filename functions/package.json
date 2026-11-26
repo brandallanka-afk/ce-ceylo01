@@ -1,0 +1,22 @@
+{
+  "name": "ceylon-heritage-functions",
+  "private": true,
+  "type": "module",
+  "main": "lib/index.mjs",
+  "engines": {
+    "node": "22"
+  },
+  "scripts": {
+    "build": "node ../scripts/prepare-functions.mjs",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "firebase-admin": "^13.0.0",
+    "firebase-functions": "^6.0.0",
+    "pdfkit": "^0.21.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0"
+  }
+}

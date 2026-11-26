@@ -1,0 +1,71 @@
+[
+  {
+    "id": "alba-cinnamon-peeling",
+    "slug": "art-of-peeling-alba-ceylon-cinnamon",
+    "brandTag": {
+      "en": "Ceyvana Harvest",
+      "si": "සෙයිවානා අස්වැන්න"
+    },
+    "publishedAt": "October 2026",
+    "readTimeMinutes": 4,
+    "title": {
+      "en": "The Quiet Craft Behind Grade Alba Ceylon Cinnamon",
+      "si": "ඇල්බා ශ්‍රේණියේ ලංකා කුරුඳු සැකසීමේ සාම්ප්‍රදායික කලාව"
+    },
+    "excerpt": {
+      "en": "Why true Cinnamomum verum from coastal Matara requires skilled hand-peeling at dawn before the bark dries.",
+      "si": "මාතර වෙරළබඩ කලාපයේ පිරිසිදු ලංකා කුරුඳු අලුයම අතින් සකසන ආකාරය සහ එහි සුවිශේෂීත්වය."
+    },
+    "body": {
+      "en": "Unlike thick cassia bark, true Ceylon cinnamon consists of paper-thin inner bark layers rolled delicately into nested quills. In Matara, master peelers work with brass rods to loosen the outer bark while sap moisture is still high, ensuring every Ceyvana quill preserves its sweet, floral essential oils.",
+      "si": "ලංකා කුරුඳු වල සිහින් අභ්‍යන්තර පොතු ස්ථර ඉතා සියුම් ලෙස එකිනෙක ඔතා සකසනු ලැබේ. මාතර පළපුරුදු කුරුඳු තලන්නන් උදෑසන තෙතමනය පවතින වේලාවේදී පිත්තල දඬු භාවිතයෙන් මෙය ඉතා පිරිසිදුව සකසන බැවින් ස්වභාවික සුවඳ ආරක්ෂා වේ."
+    },
+    "image": "/src/assets/images/product_cinnamon_pepper_1795545291338.jpg"
+  },
+  {
+    "id": "highland-bopf-plucking",
+    "slug": "dawn-plucking-in-nuwara-eliya-highlands",
+    "brandTag": {
+      "en": "Ceylomira Estates",
+      "si": "සෙයිලෝමිරා වතු යාය"
+    },
+    "publishedAt": "September 2026",
+    "readTimeMinutes": 5,
+    "title": {
+      "en": "Two Leaves and a Bud: Inside Our High-Grown BOPF Lots",
+      "si": "දළු දෙකයි පොහොට්ටුවයි: උසස් කඳුකර BOPF තේ නිෂ්පාදනය"
+    },
+    "excerpt": {
+      "en": "At 1,700 meters above sea level, cool mountain mist slows leaf growth and concentrates aromatic polyphenols.",
+      "si": "මුහුදු මට්ටමේ සිට මීටර් 1,700 ඉහළ මීදුමෙන් පිරි කඳුකරයේ තේ දළු සෙමින් වැඩීම නිසා උසස් රසයක් හිමිවේ."
+    },
+    "body": {
+      "en": "Ceylomira sources seasonal lots directly from high-elevation estates where morning sun meets cool valley mist. Within hours of plucking, leaves are withered, rolled, and fired to lock in the bright amber cup and crisp astringency prized in traditional Sri Lankan and international tea tables.",
+      "si": "සෙයිලෝමිරා තේ සඳහා දළු නෙළා ගන්නේ උදෑසන හිරු එළිය සහ මීදුම මුසු වන ඉහළ කඳුකර වතු වලිනි. නෙළා පැය කිහිපයක් ඇතුළත සැකසුම් කටයුතු සිදුකරන බැවින් නැවුම් රන්වන් කහට රසය සුරැකේ."
+    },
+    "image": "/src/assets/images/story_ceylon_highlands_1795545292272.jpg"
+  },
+  {
+    "id": "roasting-curry-blends",
+    "slug": "stone-milling-and-slow-roasting-curry-spices",
+    "brandTag": {
+      "en": "Ceyvana Kitchen",
+      "si": "සෙයිවානා මුළුතැන්ගෙය"
+    },
+    "publishedAt": "August 2026",
+    "readTimeMinutes": 3,
+    "title": {
+      "en": "Unroasted vs. Dark Roasted: Understanding Ceylon Curry Powders",
+      "si": "අමු තුනපහ සහ බැදපු තුනපහ අතර වෙනස හඳුනාගනිමු"
+    },
+    "excerpt": {
+      "en": "How roast temperature transforms coriander, cumin, and curry leaf into two distinct culinary foundations.",
+      "si": "කොත්තමල්ලි, සූදුරු සහ කරපිංචා බැදීමේ උෂ්ණත්වය අනුව ව්‍යංජනවල රසය වෙනස් වන ආකාරය."
+    },
+    "body": {
+      "en": "Sri Lankan kitchens rely on two complementary spice foundations: pale unroasted curry powder for bright vegetable and dhal dishes, and deep-toasted dark curry powder for slow-simmered meats. At Ceyvana, we roast whole seeds prior to grinding so volatile oils release evenly without scorching.",
+      "si": "ශ්‍රී ලාංකික මුළුතැන්ගෙයි එළවළු සහ පරිප්පු සඳහා අමු තුනපහද, මස් මාළු ව්‍යංජන සඳහා බැදපු තුනපහද භාවිතා වේ. සෙයිවානා නිෂ්පාදනවලදී ඇට වර්ග සම්පූර්ණයෙන් බැද පසුව කුඩු කිරීමෙන් සුවඳ උපරිමයෙන් රඳවා ගනී."
+    },
+    "image": "/src/assets/images/product_curry_blends_1795545291347.jpg"
+  }
+]

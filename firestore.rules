@@ -1,0 +1,535 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 1. Global safety net: deny everything by default
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // -------------------------------------------------------------------------
+    // Global Helpers
+    // -------------------------------------------------------------------------
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() >= 2 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isVerifiedUser() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+
+    function isBootstrapAdmin() {
+      return isVerifiedUser() && request.auth.token.email == 'brandallanka@gmail.com';
+    }
+
+    function hasActiveAdminDoc() {
+      return isVerifiedUser()
+        && exists(/databases/$(database)/documents/adminUsers/$(request.auth.uid))
+        && get(/databases/$(database)/documents/adminUsers/$(request.auth.uid)).data.active == true;
+    }
+
+    function adminRole() {
+      return get(/databases/$(database)/documents/adminUsers/$(request.auth.uid)).data.role;
+    }
+
+    function isAdmin() {
+      return isBootstrapAdmin() || hasActiveAdminDoc();
+    }
+
+    function isSuperAdmin() {
+      return isBootstrapAdmin() || (hasActiveAdminDoc() && adminRole() == 'super_admin');
+    }
+
+    function isCatalogAdmin() {
+      return isBootstrapAdmin()
+        || (hasActiveAdminDoc() && adminRole() in ['super_admin', 'catalog_manager']);
+    }
+
+    function isOrderAdmin() {
+      return isBootstrapAdmin()
+        || (hasActiveAdminDoc() && adminRole() in ['super_admin', 'order_manager']);
+    }
+
+    function isLocalizedMap(val) {
+      return val is map && val.keys().size() >= 1 && val.keys().size() <= 10;
+    }
+
+    // -------------------------------------------------------------------------
+    // Entity Validation Blueprints
+    // -------------------------------------------------------------------------
+    function isValidBrand(data) {
+      return data.keys().hasAll(['id', 'slug', 'name', 'status', 'sortOrder', 'updatedAt'])
+        && data.keys().hasOnly([
+          'id', 'slug', 'name', 'tagline', 'description', 'status', 'theme', 'heroImage', 'sortOrder', 'updatedAt'
+        ])
+        && isValidId(data.id)
+        && data.slug is string && data.slug.size() >= 2 && data.slug.size() <= 64
+        && isLocalizedMap(data.name)
+        && (!('tagline' in data) || isLocalizedMap(data.tagline))
+        && (!('description' in data) || isLocalizedMap(data.description))
+        && data.status in ['active', 'coming_soon', 'hidden']
+        && (!('theme' in data) || data.theme is map)
+        && (!('heroImage' in data) || (data.heroImage is string && data.heroImage.size() <= 500))
+        && data.sortOrder is number && data.sortOrder >= 0 && data.sortOrder <= 1000
+        && data.updatedAt == request.time;
+    }
+
+    function isValidCategory(data) {
+      return data.keys().hasAll(['id', 'brandId', 'slug', 'name', 'isActive', 'updatedAt'])
+        && data.keys().hasOnly(['id', 'brandId', 'slug', 'name', 'sortOrder', 'isActive', 'updatedAt'])
+        && isValidId(data.id)
+        && isValidId(data.brandId)
+        && data.slug is string && data.slug.size() >= 2 && data.slug.size() <= 64
+        && isLocalizedMap(data.name)
+        && (!('sortOrder' in data) || (data.sortOrder is number && data.sortOrder >= 0 && data.sortOrder <= 1000))
+        && data.isActive is bool
+        && data.updatedAt == request.time;
+    }
+
+    function isValidProduct(data) {
+      return data.keys().hasAll([
+          'id', 'brandId', 'sku', 'slug', 'name', 'variants', 'availability', 'isArchived', 'updatedAt'
+        ])
+        && data.keys().hasOnly([
+          'id', 'brandId', 'sku', 'slug', 'categorySlug', 'name', 'category',
+          'description', 'tastingNotes', 'origin', 'highlights', 'ingredients',
+          'storageInstructions', 'packagingType', 'technicalSpecs', 'certifications',
+          'mainImage', 'thumbnailImage', 'gallery', 'availability', 'featured',
+          'isArchived', 'seoTitle', 'seoDescription', 'variants', 'exportable',
+          'moqUnits', 'exportPriceUsd', 'bulkPackSizes', 'exportSpecs', 'updatedAt'
+        ])
+        && isValidId(data.id)
+        && data.brandId in ['ceyvana', 'ceylomira', 'hand-crafts']
+        && data.sku is string && data.sku.size() >= 2 && data.sku.size() <= 40
+        && data.slug is string && data.slug.size() >= 2 && data.slug.size() <= 120
+        && (!('categorySlug' in data) || (data.categorySlug is string && data.categorySlug.size() <= 64))
+        && isLocalizedMap(data.name)
+        && (!('category' in data) || isLocalizedMap(data.category))
+        && (!('description' in data) || isLocalizedMap(data.description))
+        && (!('tastingNotes' in data) || isLocalizedMap(data.tastingNotes))
+        && (!('origin' in data) || isLocalizedMap(data.origin))
+        && (!('highlights' in data) || isLocalizedMap(data.highlights))
+        && (!('ingredients' in data) || isLocalizedMap(data.ingredients))
+        && (!('storageInstructions' in data) || isLocalizedMap(data.storageInstructions))
+        && (!('packagingType' in data) || isLocalizedMap(data.packagingType))
+        && (!('technicalSpecs' in data) || isLocalizedMap(data.technicalSpecs))
+        && (!('certifications' in data) || (data.certifications is list && data.certifications.size() <= 12 && (data.certifications.size() == 0 || data.certifications[0] is string)))
+        && (!('mainImage' in data) || (data.mainImage is string && data.mainImage.size() <= 800))
+        && (!('thumbnailImage' in data) || (data.thumbnailImage is string && data.thumbnailImage.size() <= 800))
+        && (!('gallery' in data) || (data.gallery is list && data.gallery.size() <= 6 && (data.gallery.size() == 0 || data.gallery[0] is string)))
+        && data.availability in ['in_stock', 'low_stock', 'out_of_stock']
+        && (!('featured' in data) || data.featured is bool)
+        && data.isArchived is bool
+        && (!('seoTitle' in data) || (data.seoTitle is string && data.seoTitle.size() <= 160))
+        && (!('seoDescription' in data) || (data.seoDescription is string && data.seoDescription.size() <= 320))
+        && data.variants is list && data.variants.size() >= 1 && data.variants.size() <= 12 && data.variants[0] is map
+        && (!('exportable' in data) || data.exportable is bool)
+        && (!('moqUnits' in data) || (data.moqUnits is number && data.moqUnits >= 1 && data.moqUnits <= 100000))
+        && (!('exportPriceUsd' in data) || (data.exportPriceUsd is number && data.exportPriceUsd >= 0))
+        && (!('bulkPackSizes' in data) || (data.bulkPackSizes is list && data.bulkPackSizes.size() <= 12))
+        && (!('exportSpecs' in data) || data.exportSpecs is map)
+        && data.updatedAt == request.time;
+    }
+
+    function isValidInventory(data) {
+      return data.keys().hasAll(['variantSku', 'productId', 'brandId', 'stockQuantity', 'available', 'updatedAt'])
+        && data.keys().hasOnly([
+          'variantSku', 'productId', 'brandId', 'label', 'stockQuantity', 'lowStockThreshold', 'available', 'updatedAt'
+        ])
+        && isValidId(data.variantSku)
+        && isValidId(data.productId)
+        && data.brandId in ['ceyvana', 'ceylomira', 'hand-crafts']
+        && (!('label' in data) || (data.label is string && data.label.size() <= 40))
+        && data.stockQuantity is number && data.stockQuantity >= 0 && data.stockQuantity <= 1000000
+        && (!('lowStockThreshold' in data) || (data.lowStockThreshold is number && data.lowStockThreshold >= 0))
+        && data.available is bool
+        && data.updatedAt == request.time;
+    }
+
+    function isValidCustomer(data) {
+      return data.keys().hasAll(['id', 'name', 'email', 'country', 'createdAt'])
+        && data.keys().hasOnly(['id', 'name', 'email', 'phone', 'country', 'city', 'orderCount', 'createdAt'])
+        && isValidId(data.id)
+        && data.name is string && data.name.size() >= 1 && data.name.size() <= 120
+        && data.email is string && data.email.size() >= 3 && data.email.size() <= 180
+        && (!('phone' in data) || (data.phone is string && data.phone.size() <= 40))
+        && data.country is string && data.country.size() >= 2 && data.country.size() <= 80
+        && (!('city' in data) || (data.city is string && data.city.size() <= 80))
+        && (!('orderCount' in data) || (data.orderCount is number && data.orderCount >= 0))
+        && data.createdAt is timestamp;
+    }
+
+    function isValidOrder(data) {
+      return data.keys().hasAll([
+          'id', 'orderRef', 'customerName', 'currency', 'totalAmount', 'orderStatus', 'paymentStatus', 'createdAt', 'updatedAt'
+        ])
+        && data.keys().hasOnly([
+          'id', 'orderRef', 'customerId', 'customerName', 'customerEmail', 'phone', 'country',
+          'address', 'city', 'postalCode', 'orderNotes', 'deliveryMethod', 'paymentMethod',
+          'paymentReference', 'shippingStatus', 'trackingNumber', 'carrier',
+          'currency', 'subtotal', 'shippingFee', 'totalAmount', 'itemCount', 'items', 'paymentHistory',
+          'orderStatus', 'paymentStatus', 'monthKey', 'createdAt', 'updatedAt'
+        ])
+        && isValidId(data.id)
+        && data.orderRef is string && data.orderRef.size() >= 4 && data.orderRef.size() <= 40
+        && (!('customerId' in data) || (data.customerId is string && data.customerId.size() <= 128))
+        && data.customerName is string && data.customerName.size() >= 1 && data.customerName.size() <= 120
+        && (!('customerEmail' in data) || (data.customerEmail is string && data.customerEmail.size() <= 180))
+        && (!('phone' in data) || (data.phone is string && data.phone.size() <= 40))
+        && (!('country' in data) || (data.country is string && data.country.size() <= 80))
+        && (!('address' in data) || (data.address is string && data.address.size() <= 300))
+        && (!('city' in data) || (data.city is string && data.city.size() <= 80))
+        && (!('postalCode' in data) || (data.postalCode is string && data.postalCode.size() <= 30))
+        && (!('orderNotes' in data) || (data.orderNotes is string && data.orderNotes.size() <= 500))
+        && (!('deliveryMethod' in data) || data.deliveryMethod in ['local_standard', 'local_express', 'international_courier', 'international_quote'])
+        && (!('paymentMethod' in data) || data.paymentMethod in ['whatsapp_order', 'bank_transfer', 'cod', 'sl_gateway', 'intl_gateway'])
+        && (!('paymentReference' in data) || (data.paymentReference is string && data.paymentReference.size() <= 120))
+        && (!('shippingStatus' in data) || data.shippingStatus in ['not_dispatched', 'label_created', 'in_transit', 'out_for_delivery', 'delivered', 'returned'])
+        && (!('trackingNumber' in data) || (data.trackingNumber is string && data.trackingNumber.size() <= 100))
+        && (!('carrier' in data) || (data.carrier is string && data.carrier.size() <= 80))
+        && data.currency is string && data.currency.size() == 3 && data.currency.matches('^[A-Z]{3}$')
+        && (!('subtotal' in data) || (data.subtotal is number && data.subtotal >= 0))
+        && (!('shippingFee' in data) || (data.shippingFee is number && data.shippingFee >= 0))
+        && data.totalAmount is number && data.totalAmount >= 0
+        && (!('itemCount' in data) || (data.itemCount is number && data.itemCount >= 1))
+        && (!('items' in data) || (data.items is list && data.items.size() <= 50 && (data.items.size() == 0 || data.items[0] is map)))
+        && (!('paymentHistory' in data) || (data.paymentHistory is list && data.paymentHistory.size() <= 30 && (data.paymentHistory.size() == 0 || data.paymentHistory[0] is map)))
+        && data.orderStatus in ['new', 'contacted', 'pending', 'awaiting_payment', 'payment_verification', 'confirmed', 'processing', 'dispatched', 'shipped', 'completed', 'delivered', 'cancelled', 'placed', 'packed']
+        && data.paymentStatus in ['pending', 'pending_verification', 'paid', 'failed', 'refunded', 'partially_refunded']
+        && (!('monthKey' in data) || (data.monthKey is string && data.monthKey.size() == 7))
+        && data.createdAt is timestamp
+        && data.updatedAt == request.time;
+    }
+
+    function isValidEnquiryCreate(data) {
+      return data.keys().hasAll(['type', 'contactName', 'email', 'message', 'status', 'createdAt'])
+        && data.keys().hasOnly([
+          'enquiryRef', 'type', 'brandInterest', 'contactName', 'companyName', 'email',
+          'phone', 'country', 'website', 'businessType', 'productInterests',
+          'requiredQuantities', 'packagingRequirements', 'destinationCountry',
+          'volumeBand', 'message', 'status', 'createdAt'
+        ])
+        && (!('enquiryRef' in data) || (data.enquiryRef is string && data.enquiryRef.size() <= 40))
+        && data.type in ['wholesale', 'export', 'general']
+        && (!('brandInterest' in data) || (data.brandInterest is string && data.brandInterest.size() <= 80))
+        && data.contactName is string && data.contactName.size() >= 1 && data.contactName.size() <= 120
+        && (!('companyName' in data) || (data.companyName is string && data.companyName.size() <= 140))
+        && data.email is string && data.email.size() >= 3 && data.email.size() <= 180
+        && (!('phone' in data) || (data.phone is string && data.phone.size() <= 40))
+        && (!('country' in data) || (data.country is string && data.country.size() <= 80))
+        && (!('website' in data) || (data.website is string && data.website.size() <= 240 && data.website.matches('^https?://.*')))
+        && (!('businessType' in data) || data.businessType in ['Importer', 'Distributor', 'Wholesaler', 'Retailer', 'Private Label Buyer', 'Other'])
+        && (!('productInterests' in data) || (data.productInterests is list && data.productInterests.size() <= 25 && (data.productInterests.size() == 0 || data.productInterests[0] is string)))
+        && (!('requiredQuantities' in data) || (data.requiredQuantities is string && data.requiredQuantities.size() <= 160))
+        && (!('packagingRequirements' in data) || (data.packagingRequirements is string && data.packagingRequirements.size() <= 200))
+        && (!('destinationCountry' in data) || (data.destinationCountry is string && data.destinationCountry.size() <= 80))
+        && (!('volumeBand' in data) || (data.volumeBand is string && data.volumeBand.size() <= 60))
+        && data.message is string && data.message.size() >= 3 && data.message.size() <= 2500
+        && data.status == 'new'
+        && data.createdAt == request.time;
+    }
+
+    function isValidEnquiryUpdate(data) {
+      return data.keys().hasAll(['type', 'contactName', 'email', 'message', 'status', 'createdAt'])
+        && data.keys().hasOnly([
+          'enquiryRef', 'type', 'brandInterest', 'contactName', 'companyName', 'email',
+          'phone', 'country', 'website', 'businessType', 'productInterests',
+          'requiredQuantities', 'packagingRequirements', 'destinationCountry',
+          'volumeBand', 'message', 'status', 'adminResponse', 'createdAt', 'updatedAt'
+        ])
+        && data.status in ['new', 'reviewed', 'quoted', 'responded', 'archived']
+        && (!('adminResponse' in data) || (data.adminResponse is string && data.adminResponse.size() <= 2500))
+        && data.createdAt == existing().createdAt;
+    }
+
+    function isValidPromotion(data) {
+      return data.keys().hasAll(['code', 'type', 'value', 'isActive', 'updatedAt'])
+        && data.keys().hasOnly(['code', 'type', 'value', 'minOrderLkr', 'brandIds', 'isActive', 'expiresAt', 'updatedAt'])
+        && data.code is string && data.code.size() >= 3 && data.code.size() <= 32 && data.code.matches('^[A-Z0-9_\\-]+$')
+        && data.type in ['percentage', 'fixed']
+        && data.value is number && data.value > 0 && data.value <= 1000000
+        && (!('minOrderLkr' in data) || (data.minOrderLkr is number && data.minOrderLkr >= 0))
+        && (!('brandIds' in data) || (data.brandIds is list && data.brandIds.size() <= 10 && (data.brandIds.size() == 0 || data.brandIds[0] is string)))
+        && data.isActive is bool
+        && (!('expiresAt' in data) || (data.expiresAt is string && data.expiresAt.size() <= 40))
+        && data.updatedAt == request.time;
+    }
+
+    function isValidSiteSetting(data) {
+      return data.keys().hasAll(['id', 'updatedAt'])
+        && data.keys().hasOnly([
+          'id', 'announcement', 'heroTitle', 'heroSubtitle', 'whatsappNumber',
+          'brandWhatsappNumbers', 'portfolioSettings', 'enabledLanguages',
+          'freeDeliveryThresholdLkr', 'updatedAt'
+        ])
+        && isValidId(data.id)
+        && (!('announcement' in data) || isLocalizedMap(data.announcement))
+        && (!('heroTitle' in data) || isLocalizedMap(data.heroTitle))
+        && (!('heroSubtitle' in data) || isLocalizedMap(data.heroSubtitle))
+        && (!('whatsappNumber' in data) || (data.whatsappNumber is string && data.whatsappNumber.size() <= 30))
+        && (!('brandWhatsappNumbers' in data) || data.brandWhatsappNumbers is map)
+        && (!('portfolioSettings' in data) || data.portfolioSettings is map)
+        && (!('enabledLanguages' in data) || (data.enabledLanguages is list && data.enabledLanguages.size() <= 10 && (data.enabledLanguages.size() == 0 || data.enabledLanguages[0] is map)))
+        && (!('freeDeliveryThresholdLkr' in data) || (data.freeDeliveryThresholdLkr is number && data.freeDeliveryThresholdLkr >= 0))
+        && data.updatedAt == request.time;
+    }
+
+    function isValidAdminUser(data) {
+      return data.keys().hasAll(['uid', 'email', 'role', 'active', 'createdAt', 'updatedAt'])
+        && data.keys().hasOnly(['uid', 'email', 'displayName', 'role', 'active', 'createdAt', 'updatedAt'])
+        && isValidId(data.uid)
+        && data.email is string && data.email.size() >= 3 && data.email.size() <= 180
+        && (!('displayName' in data) || (data.displayName is string && data.displayName.size() <= 120))
+        && data.role in ['super_admin', 'catalog_manager', 'order_manager']
+        && data.active is bool
+        && data.createdAt is timestamp
+        && data.updatedAt == request.time;
+    }
+
+    function isValidAuditLog(data) {
+      return data.keys().hasAll([
+          'id', 'actorUid', 'actorEmail', 'actorRole', 'action', 'targetType', 'targetId', 'summary', 'createdAt'
+        ])
+        && data.keys().hasOnly([
+          'id', 'actorUid', 'actorEmail', 'actorRole', 'action', 'targetType', 'targetId', 'summary', 'createdAt'
+        ])
+        && isValidId(data.id)
+        && isValidId(data.actorUid)
+        && data.actorEmail is string && data.actorEmail.size() >= 3 && data.actorEmail.size() <= 180
+        && data.actorRole in ['super_admin', 'catalog_manager', 'order_manager']
+        && data.action is string && data.action.size() >= 2 && data.action.size() <= 80
+        && data.targetType in ['order', 'payment', 'enquiry', 'settings', 'stock', 'export', 'admin_users', 'catalog', 'portfolio', 'catalogue_request']
+        && data.targetId is string && data.targetId.size() >= 1 && data.targetId.size() <= 120
+        && data.summary is string && data.summary.size() >= 2 && data.summary.size() <= 280
+        && data.createdAt == request.time;
+    }
+
+    function isValidCataloguePortfolio(data) {
+      return data.keys().hasAll(['id', 'brandId', 'language', 'title', 'version', 'status', 'generatedAt', 'updatedAt'])
+        && data.keys().hasOnly([
+          'id', 'brandId', 'language', 'currency', 'title', 'version', 'status', 'scope',
+          'categorySlugs', 'productIds', 'coverDesign', 'orientation', 'introMessage',
+          'companyProfile', 'contactInfo', 'websiteUrl', 'whatsappNumber', 'omittedFieldNote',
+          'fields', 'productCount', 'catalogFingerprint', 'pdfFileName', 'pageCount',
+          'fileSizeBytes', 'generatedBy', 'generatedAt', 'publishedAt', 'updatedAt'
+        ])
+        && isValidId(data.id)
+        && data.brandId in ['ceyvana', 'ceylomira', 'hand-crafts']
+        && data.language in ['en', 'si']
+        && data.title is string && data.title.size() >= 2 && data.title.size() <= 140
+        && data.version is string && data.version.size() >= 2 && data.version.size() <= 24
+        && data.status in ['draft', 'published', 'unpublished']
+        && (!('scope' in data) || data.scope in ['all', 'categories', 'products'])
+        && (!('coverDesign' in data) || data.coverDesign in ['heritage_crest', 'editorial_split', 'gallery_minimal'])
+        && (!('orientation' in data) || data.orientation in ['portrait', 'landscape'])
+        && data.generatedAt is string
+        && data.updatedAt == request.time;
+    }
+
+    function isValidCatalogueRequestCreate(data) {
+      return data.keys().hasAll(['brandId', 'language', 'customerName', 'email', 'country', 'status', 'createdAt'])
+        && data.keys().hasOnly([
+          'id', 'requestRef', 'brandId', 'language', 'customerName', 'email', 'country',
+          'companyName', 'whatsappNumber', 'scope', 'requestedCategories', 'requestedProducts',
+          'notes', 'status', 'createdAt'
+        ])
+        && data.brandId in ['ceyvana', 'ceylomira', 'hand-crafts']
+        && data.language in ['en', 'si']
+        && data.customerName is string && data.customerName.size() >= 2 && data.customerName.size() <= 120
+        && data.email is string && data.email.size() >= 3 && data.email.size() <= 180
+        && data.country is string && data.country.size() >= 2 && data.country.size() <= 80
+        && (!('companyName' in data) || (data.companyName is string && data.companyName.size() <= 140))
+        && (!('whatsappNumber' in data) || (data.whatsappNumber is string && data.whatsappNumber.size() <= 40))
+        && (!('scope' in data) || data.scope in ['all', 'categories', 'products'])
+        && (!('requestedCategories' in data) || (data.requestedCategories is list && data.requestedCategories.size() <= 20))
+        && (!('requestedProducts' in data) || (data.requestedProducts is list && data.requestedProducts.size() <= 30))
+        && (!('notes' in data) || (data.notes is string && data.notes.size() <= 1000))
+        && data.status == 'new'
+        && data.createdAt == request.time;
+    }
+
+    function isValidCatalogueRequestUpdate(data) {
+      return data.keys().hasAll(['brandId', 'language', 'customerName', 'email', 'country', 'status', 'createdAt'])
+        && data.keys().hasOnly([
+          'id', 'requestRef', 'brandId', 'language', 'customerName', 'email', 'country',
+          'companyName', 'whatsappNumber', 'scope', 'requestedCategories', 'requestedProducts',
+          'notes', 'status', 'assignedPortfolioId', 'assignedPortfolioVersion',
+          'adminNotes', 'updatedBy', 'createdAt', 'updatedAt'
+        ])
+        && data.status in ['new', 'reviewed', 'sent', 'archived']
+        && (!('assignedPortfolioId' in data) || (data.assignedPortfolioId is string && data.assignedPortfolioId.size() <= 128))
+        && (!('assignedPortfolioVersion' in data) || (data.assignedPortfolioVersion is string && data.assignedPortfolioVersion.size() <= 24))
+        && (!('adminNotes' in data) || (data.adminNotes is string && data.adminNotes.size() <= 1000))
+        && data.createdAt == existing().createdAt
+        && data.updatedAt == request.time;
+    }
+
+    // -------------------------------------------------------------------------
+    // Healthcheck doc for testConnection()
+    // -------------------------------------------------------------------------
+    match /test/connection {
+      allow get: if true;
+    }
+
+    // -------------------------------------------------------------------------
+    // Collection Rules (10 Core Collections)
+    // -------------------------------------------------------------------------
+    match /brands/{brandId} {
+      allow get: if isValidId(brandId) && (existing().status != 'hidden' || isAdmin());
+      allow list: if existing().status != 'hidden' || isAdmin();
+      allow create: if isValidId(brandId) && isCatalogAdmin() && isValidBrand(incoming());
+      allow update: if isValidId(brandId) && isCatalogAdmin() && isValidBrand(incoming())
+        && incoming().id == existing().id;
+      allow delete: if isValidId(brandId) && isSuperAdmin();
+    }
+
+    match /categories/{categoryId} {
+      allow get: if isValidId(categoryId) && (existing().isActive == true || isAdmin());
+      allow list: if existing().isActive == true || isAdmin();
+      allow create: if isValidId(categoryId) && isCatalogAdmin() && isValidCategory(incoming());
+      allow update: if isValidId(categoryId) && isCatalogAdmin() && isValidCategory(incoming())
+        && incoming().id == existing().id;
+      allow delete: if isValidId(categoryId) && isSuperAdmin();
+    }
+
+    match /products/{productId} {
+      allow get: if isValidId(productId) && (existing().isArchived == false || isAdmin());
+      allow list: if existing().isArchived == false || isAdmin();
+      allow create: if isValidId(productId) && isCatalogAdmin() && isValidProduct(incoming());
+      allow update: if isValidId(productId) && isCatalogAdmin() && isValidProduct(incoming())
+        && incoming().id == existing().id
+        && incoming().diff(existing()).affectedKeys().hasOnly([
+          'brandId', 'sku', 'slug', 'categorySlug', 'name', 'category',
+          'description', 'tastingNotes', 'origin', 'highlights', 'ingredients',
+          'storageInstructions', 'packagingType', 'technicalSpecs', 'certifications',
+          'mainImage', 'thumbnailImage', 'gallery', 'availability', 'featured',
+          'isArchived', 'seoTitle', 'seoDescription', 'variants', 'exportable',
+          'moqUnits', 'exportPriceUsd', 'bulkPackSizes', 'exportSpecs', 'updatedAt'
+        ]);
+      allow delete: if isValidId(productId) && isSuperAdmin();
+    }
+
+    match /inventory/{variantSku} {
+      allow get: if isValidId(variantSku) && isAdmin();
+      allow list: if isAdmin();
+      allow create: if isValidId(variantSku) && isCatalogAdmin() && isValidInventory(incoming());
+      allow update: if isValidId(variantSku) && isCatalogAdmin() && isValidInventory(incoming())
+        && incoming().variantSku == existing().variantSku;
+      allow delete: if isValidId(variantSku) && isSuperAdmin();
+    }
+
+    match /customers/{customerId} {
+      allow get: if isValidId(customerId) && isOrderAdmin();
+      allow list: if isOrderAdmin();
+      allow create: if isValidId(customerId) && isOrderAdmin() && isValidCustomer(incoming())
+        && incoming().createdAt == request.time;
+      allow update: if isValidId(customerId) && isOrderAdmin() && isValidCustomer(incoming())
+        && incoming().id == existing().id
+        && incoming().createdAt == existing().createdAt;
+      allow delete: if isValidId(customerId) && isSuperAdmin();
+    }
+
+    match /orders/{orderId} {
+      allow get: if isValidId(orderId) && isOrderAdmin();
+      allow list: if isOrderAdmin();
+      allow create: if isValidId(orderId) && isOrderAdmin() && isValidOrder(incoming())
+        && incoming().createdAt == request.time;
+      allow update: if isValidId(orderId) && isOrderAdmin() && isValidOrder(incoming())
+        && incoming().id == existing().id
+        && incoming().createdAt == existing().createdAt
+        && incoming().diff(existing()).affectedKeys().hasOnly([
+          'orderStatus', 'paymentStatus', 'shippingStatus', 'trackingNumber', 'carrier', 'paymentReference', 'paymentHistory', 'updatedAt'
+        ]);
+      allow delete: if isValidId(orderId) && isSuperAdmin();
+    }
+
+    match /enquiries/{enquiryId} {
+      allow get: if isValidId(enquiryId) && isAdmin();
+      allow list: if isAdmin();
+      allow create: if isValidId(enquiryId) && isValidEnquiryCreate(incoming());
+      allow update: if isValidId(enquiryId) && isAdmin() && isValidEnquiryUpdate(incoming())
+        && incoming().diff(existing()).affectedKeys().hasOnly(['status', 'adminResponse', 'updatedAt']);
+      allow delete: if isValidId(enquiryId) && isSuperAdmin();
+    }
+
+    match /promotions/{promoId} {
+      allow get: if isValidId(promoId) && isAdmin();
+      allow list: if isAdmin();
+      allow create: if isValidId(promoId) && isCatalogAdmin() && isValidPromotion(incoming());
+      allow update: if isValidId(promoId) && isCatalogAdmin() && isValidPromotion(incoming())
+        && incoming().code == existing().code;
+      allow delete: if isValidId(promoId) && isSuperAdmin();
+    }
+
+    match /siteSettings/{settingId} {
+      allow get: if isValidId(settingId);
+      allow list: if true;
+      allow create: if isValidId(settingId) && isSuperAdmin() && isValidSiteSetting(incoming());
+      allow update: if isValidId(settingId) && isSuperAdmin() && isValidSiteSetting(incoming())
+        && incoming().id == existing().id;
+      allow delete: if isValidId(settingId) && isSuperAdmin();
+    }
+
+    match /adminUsers/{uid} {
+      allow get: if isValidId(uid) && (isSuperAdmin() || (isVerifiedUser() && request.auth.uid == uid));
+      allow list: if isSuperAdmin();
+      allow create: if isValidId(uid)
+        && isValidAdminUser(incoming())
+        && incoming().uid == uid
+        && incoming().createdAt == request.time
+        && (
+          isSuperAdmin()
+          || (isBootstrapAdmin() && request.auth.uid == uid && incoming().role == 'super_admin' && incoming().active == true)
+        );
+      allow update: if isValidId(uid) && isSuperAdmin() && isValidAdminUser(incoming())
+        && incoming().uid == existing().uid
+        && incoming().createdAt == existing().createdAt;
+      allow delete: if isValidId(uid) && isSuperAdmin();
+    }
+
+    match /auditLogs/{logId} {
+      allow get, list: if isSuperAdmin();
+      allow create: if isValidId(logId)
+        && isVerifiedUser()
+        && isAdmin()
+        && isValidAuditLog(incoming())
+        && incoming().actorUid == request.auth.uid;
+      allow update, delete: if false;
+    }
+
+    match /cataloguePortfolios/{portfolioId} {
+      allow get: if isValidId(portfolioId) && (existing().status == 'published' || isAdmin());
+      allow list: if existing().status == 'published' || isAdmin();
+      allow create: if isValidId(portfolioId) && isCatalogAdmin() && isValidCataloguePortfolio(incoming())
+        && incoming().id == portfolioId;
+      allow update: if isValidId(portfolioId) && isCatalogAdmin() && isValidCataloguePortfolio(incoming())
+        && incoming().id == existing().id
+        && incoming().brandId == existing().brandId
+        && incoming().generatedAt == existing().generatedAt;
+      allow delete: if isValidId(portfolioId) && isSuperAdmin();
+    }
+
+    match /catalogueRequests/{requestId} {
+      allow get: if isValidId(requestId) && isAdmin();
+      allow list: if isAdmin();
+      allow create: if isValidId(requestId) && isValidCatalogueRequestCreate(incoming());
+      allow update: if isValidId(requestId) && isAdmin() && isValidCatalogueRequestUpdate(incoming())
+        && incoming().diff(existing()).affectedKeys().hasOnly([
+          'status', 'assignedPortfolioId', 'assignedPortfolioVersion', 'adminNotes', 'updatedBy', 'updatedAt'
+        ]);
+      allow delete: if isValidId(requestId) && isSuperAdmin();
+    }
+  }
+}

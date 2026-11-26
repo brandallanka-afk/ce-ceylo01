@@ -1,0 +1,41 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null && request.auth.token.email_verified == true;
+    }
+
+    function isCatalogAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == 'brandallanka@gmail.com'
+        || (
+          firestore.exists(/databases/(ai-studio-ceyvanaceylomira-e606d197-a4e9-4027-ac45-0034ca58574e)/documents/adminUsers/$(request.auth.uid))
+          && firestore.get(/databases/(ai-studio-ceyvanaceylomira-e606d197-a4e9-4027-ac45-0034ca58574e)/documents/adminUsers/$(request.auth.uid)).data.active == true
+          && firestore.get(/databases/(ai-studio-ceyvanaceylomira-e606d197-a4e9-4027-ac45-0034ca58574e)/documents/adminUsers/$(request.auth.uid)).data.role in ['super_admin', 'catalog_manager']
+        )
+      );
+    }
+
+    // Product images and thumbnails: public read, admin-only bounded WebP/JPEG/PNG uploads (max 2MB)
+    match /products/{brandId}/{productId}/{fileName} {
+      allow read: if true;
+      allow create, update: if isCatalogAdmin()
+        && brandId in ['ceyvana', 'ceylomira', 'hand-crafts']
+        && request.resource != null
+        && request.resource.size <= 2 * 1024 * 1024
+        && request.resource.contentType.matches('image/(webp|jpeg|png)');
+      allow delete: if isCatalogAdmin()
+        && brandId in ['ceyvana', 'ceylomira', 'hand-crafts'];
+    }
+
+    // Bank transfer slips stay strictly server-side (no direct browser client access)
+    match /payment-slips/{allSlipPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

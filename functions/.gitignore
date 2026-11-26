@@ -1,0 +1,5 @@
+node_modules/
+lib/
+firebase-applet-config.json
+src/data/products.json
+.env*
